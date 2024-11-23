@@ -1,3 +1,5 @@
+import json
+import os
 from models import ChatMessage, ChatHistory
 import dspy
 from lms.together import Together
@@ -18,7 +20,11 @@ lm = Together(
 dspy.settings.configure(lm=lm)
 
 chat_history = ChatHistory()
-chatter = ChatterModule(examples=None)
+
+with open(os.path.abspath(os.path.join(os.getcwd(), "training_data/conversations.json")), "r") as file:
+    conversation_data = json.load(file)
+
+chatter = ChatterModule(examples=conversation_data)
 while True:
     # Get user input
     user_input = input("You: ")
