@@ -6,10 +6,12 @@ from typing import List, Optional
 class ChatMessage(BaseModel):
     from_creator: bool
     content: str
+    message_time: datetime | None = None
 
     def __str__(self):
         role = "YOU" if self.from_creator else "THE FAN"
         message = role + ": " + self.content
+        message = (f"[{self.message_time.isoformat(timespec='seconds')}] " + message) if self.message_time else message
         return message
 
 class ChatHistory(BaseModel):
