@@ -1,3 +1,4 @@
+from datetime import datetime, timezone
 import json
 import os
 from models import ChatMessage, ChatHistory
@@ -34,6 +35,7 @@ while True:
         ChatMessage(
             from_creator=False,
             content=user_input,
+            message_time=datetime.now(tz=timezone.utc)
         ),
     )
 
@@ -45,6 +47,7 @@ while True:
         ChatMessage(
             from_creator=True,
             content=response,
+            message_time=datetime.now(tz=timezone.utc)
         ),
     )
     # Print response
